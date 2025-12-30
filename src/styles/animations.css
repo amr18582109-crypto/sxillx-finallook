@@ -1,0 +1,13 @@
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes gradient-shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-fade-in-up { animation: fade-in-up 0.45s var(--ease-out) both }
+.animate-gradient-shimmer { background-size: 200% 200%; animation: gradient-shimmer 6s linear infinite }

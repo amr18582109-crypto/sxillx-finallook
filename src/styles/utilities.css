@@ -1,0 +1,92 @@
+@import './designTokens.css';
+
+/* Flexbox */
+.flex { display:flex }
+.flex-col { display:flex; flex-direction:column }
+.items-center { align-items:center }
+.justify-between { justify-content:space-between }
+.justify-center { justify-content:center }
+
+/* Spacing (examples) */
+.p-6 { padding: var(--space-6) }
+.p-4 { padding: var(--space-4) }
+.px-4 { padding-left: var(--space-4); padding-right: var(--space-4) }
+.py-4 { padding-top: var(--space-4); padding-bottom: var(--space-4) }
+.m-4 { margin: var(--space-4) }
+.mt-4 { margin-top: var(--space-4) }
+.mb-4 { margin-bottom: var(--space-4) }
+.gap-4 { gap: var(--space-4) }
+
+/* Grid */
+.grid { display:grid }
+.grid-cols-2 { grid-template-columns: repeat(2, minmax(0,1fr)) }
+.grid-cols-3 { grid-template-columns: repeat(3, minmax(0,1fr)) }
+
+/* Typography */
+.text-xs { font-size: var(--text-xs) }
+.text-sm { font-size: var(--text-sm) }
+.text-base { font-size: var(--text-base) }
+.text-lg { font-size: var(--text-lg) }
+.text-xl { font-size: var(--text-xl) }
+.font-semibold { font-weight: var(--font-semibold) }
+.font-bold { font-weight: var(--font-bold) }
+.text-primary { color: var(--text-primary) }
+.text-secondary { color: var(--text-secondary) }
+.text-muted { color: var(--text-tertiary) }
+
+/* Colors */
+.bg-gradient-primary { background: var(--gradient-primary) }
+.bg-primary { background: var(--bg-primary) }
+.bg-secondary { background: var(--bg-secondary) }
+.bg-tertiary { background: var(--bg-tertiary) }
+
+.text-inverse { color: var(--text-inverse) }
+
+/* Borders & Radius */
+.rounded { border-radius: var(--radius-base) }
+.rounded-md { border-radius: var(--radius-md) }
+.rounded-lg { border-radius: var(--radius-lg) }
+.rounded-xl { border-radius: var(--radius-xl) }
+
+/* Shadows */
+.shadow-xs { box-shadow: var(--shadow-xs) }
+.shadow-sm { box-shadow: var(--shadow-sm) }
+.shadow { box-shadow: var(--shadow-base) }
+.shadow-md { box-shadow: var(--shadow-md) }
+.shadow-lg { box-shadow: var(--shadow-lg) }
+
+/* Utilities */
+.truncate { overflow:hidden; white-space:nowrap; text-overflow:ellipsis }
+.sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0 }
+.visually-visible:focus { outline: 3px solid rgba(102,126,234,0.25); }
+
+/* Global UI transitions */
+.ui-transition { transition: background-color var(--duration-base) var(--ease-in-out), color var(--duration-base) var(--ease-in-out), transform var(--duration-base) var(--ease-in-out), box-shadow var(--duration-base) var(--ease-in-out), opacity var(--duration-base) var(--ease-in-out); }
+
+/* Apply sensible transitions to common interactive elements */
+button, .btn, a, input, textarea, select {
+	transition: background-color var(--duration-base) var(--ease-in-out), color var(--duration-base) var(--ease-in-out), transform var(--duration-base) var(--ease-in-out), box-shadow var(--duration-base) var(--ease-in-out), opacity var(--duration-base) var(--ease-in-out);
+}
+
+/* Form focus micro-interaction */
+input:focus, textarea:focus, select:focus {
+	box-shadow: 0 4px 18px rgba(59,130,246,0.08);
+	transform: translateY(-1px);
+}
+
+/* Landing features card helper */
+.landing-feature {
+	background: linear-gradient(180deg, var(--color-gray-50), var(--bg-primary));
+	border-radius: var(--radius-xl);
+	padding: 1.5rem;
+	box-shadow: var(--shadow-md);
+	transform: translateY(0);
+	transition: transform var(--duration-base) var(--ease-out), box-shadow var(--duration-base) var(--ease-out), opacity var(--duration-slower) var(--ease-out);
+	opacity: 1;
+}
+.landing-feature:hover {
+	transform: translateY(-8px) scale(1.02);
+	box-shadow: var(--shadow-xl);
+}
+.landing-feature.invisible { opacity: 0; }
+
