@@ -9,10 +9,14 @@ const JobsList = () => {
   const [filter, setFilter] = useState('all');
   const [selectedJob, setSelectedJob] = useState(null);
   const [showApplyModal, setShowApplyModal] = useState(false);
+  const [appliedJobIds, setAppliedJobIds] = useState(new Set());
 
   useEffect(() => {
     const appliedJobs = getFromStorage('appliedJobs', []);
     const postedJobs = getFromStorage('postedJobs', []);
+    
+    // Update applied job IDs state
+    setAppliedJobIds(new Set(appliedJobs));
     
     // Merge posted jobs with mock jobs
     const allJobs = [...postedJobs, ...mockJobs];
@@ -29,9 +33,17 @@ const JobsList = () => {
     setShowApplyModal(true);
   };
 
-  const handleSuccess = () => {
-    // Show success message
-    alert('Application submitted successfully!');
+  const handleSuccess = (jobId) => {
+    // Update the applied job IDs to trigger re-render of JobCards
+    setAppliedJobIds(prev => new Set([...prev, jobId]));
+    
+    // Also update the jobs list if we're in 'applied' filter
+    if (filter === 'applied') {
+      const appliedJobs = getFromStorage('appliedJobs', []);
+      const postedJobs = getFromStorage('postedJobs', []);
+      const allJobs = [...postedJobs, ...mockJobs];
+      setJobs(allJobs.filter(job => appliedJobs.includes(job.id)));
+    }
   };
 
   return (
@@ -71,7 +83,12 @@ const JobsList = () => {
             </div>
           ) : (
             jobs.map((job) => (
-              <JobCard key={job.id} job={job} onApply={handleApply} />
+              <JobCard 
+                key={job.id} 
+                job={job} 
+                onApply={handleApply} 
+                appliedJobIds={appliedJobIds}
+              />
             ))
           )}
         </div>
@@ -84,7 +101,7 @@ const JobsList = () => {
             setShowApplyModal(false);
             setSelectedJob(null);
           }}
-          onSuccess={handleSuccess}
+          onSuccess={() => handleSuccess(selectedJob.id)}
         />
       )}
     </div>

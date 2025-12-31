@@ -58,21 +58,57 @@ const Navbar: React.FC = () => {
                                             key={item.href}
                                             to={item.href}
                                             aria-current={isActive(item.href) ? 'page' : undefined}
-                                            className={`nav-link ${isActive(item.href) ? 'nav-link-active' : ''}`}
+                                            className={`nav-link px-4 py-2 rounded-lg transition-all duration-300 font-medium ${
+                                                isActive(item.href) 
+                                                    ? 'bg-gradient-to-r from-primary/10 to-secondary/10 text-primary font-semibold shadow-sm border border-primary/20' 
+                                                    : 'text-gray-600 hover:text-primary hover:bg-primary/5 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-2'
+                                            }`}
                                         >
                                             {item.name}
                                         </Link>
                                     ))
                                 ) : (
                                     <>
-                                        <Link to="/company/dashboard" className={`nav-link ${isActive('/company/dashboard') ? 'nav-link-active' : ''}`}>{t('dashboard')}</Link>
-                                        <Link to="/company/post-job" className={`nav-link ${isActive('/company/post-job') ? 'nav-link-active' : ''}`}>{t('postJob')}</Link>
-                                        <Link to="/company/inbox" className={`nav-link ${isActive('/company/inbox') ? 'nav-link-active' : ''}`}>Applications</Link>
+                                        <Link 
+                                            to="/company/dashboard" 
+                                            className={`nav-link px-4 py-2 rounded-lg transition-all duration-300 font-medium ${
+                                                isActive('/company/dashboard') 
+                                                    ? 'bg-gradient-to-r from-primary/10 to-secondary/10 text-primary font-semibold shadow-sm border border-primary/20' 
+                                                    : 'text-gray-600 hover:text-primary hover:bg-primary/5 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-2'
+                                            }`}
+                                        >
+                                            {t('dashboard')}
+                                        </Link>
+                                        <Link 
+                                            to="/company/post-job" 
+                                            className={`nav-link px-4 py-2 rounded-lg transition-all duration-300 font-medium ${
+                                                isActive('/company/post-job') 
+                                                    ? 'bg-gradient-to-r from-primary/10 to-secondary/10 text-primary font-semibold shadow-sm border border-primary/20' 
+                                                    : 'text-gray-600 hover:text-primary hover:bg-primary/5 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-2'
+                                            }`}
+                                        >
+                                            {t('postJob')}
+                                        </Link>
+                                        <Link 
+                                            to="/company/inbox" 
+                                            className={`nav-link px-4 py-2 rounded-lg transition-all duration-300 font-medium ${
+                                                isActive('/company/inbox') 
+                                                    ? 'bg-gradient-to-r from-primary/10 to-secondary/10 text-primary font-semibold shadow-sm border border-primary/20' 
+                                                    : 'text-gray-600 hover:text-primary hover:bg-primary/5 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-2'
+                                            }`}
+                                        >
+                                            Applications
+                                        </Link>
                                     </>
                                 )
                             ) : (
                                 <>
-                                    <Link to="/jobs" className="nav-link">{t('searchJobs')}</Link>
+                                    <Link 
+                                        to="/jobs" 
+                                        className="nav-link px-4 py-2 rounded-lg transition-all duration-300 font-medium text-gray-600 hover:text-primary hover:bg-primary/5 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-2"
+                                    >
+                                        {t('searchJobs')}
+                                    </Link>
                                 </>
                             )}
                         </div>
@@ -124,22 +160,69 @@ const Navbar: React.FC = () => {
                             </div>
                         </div>
 
-                        {/* mobile menu panel */}
                         {isMenuOpen && (
-                            <div className="md:hidden w-full py-4 border-t border-gray-200 animate-fade-in">
-                                <div className="flex flex-col gap-2">
-                                    {navItems.map((item) => (
-                                        <button
-                                            key={item.href}
-                                            onClick={() => handleNavigate(item.href)}
-                                            className={`text-left px-4 py-3 rounded-xl transition-colors duration-300 ${isActive(item.href) ? 'bg-primary/10 text-primary font-medium' : 'hover:bg-gray-100 text-gray-600'}`}
-                                        >
-                                            {item.name}
-                                        </button>
-                                    ))}
+                                <div className="md:hidden w-full py-4 border-t border-gray-200 animate-fade-in">
+                                    <div className="flex flex-col gap-2">
+                                        {isAuthenticated ? (
+                                            user.type === 'student' ? (
+                                                navItems.map((item) => (
+                                                    <button
+                                                        key={item.href}
+                                                        onClick={() => handleNavigate(item.href)}
+                                                        className={`text-left px-4 py-3 rounded-xl transition-all duration-300 font-medium ${
+                                                            isActive(item.href) 
+                                                                ? 'bg-gradient-to-r from-primary/10 to-secondary/10 text-primary font-semibold shadow-sm border border-primary/20' 
+                                                                : 'text-gray-600 hover:text-primary hover:bg-primary/5 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-2'
+                                                        }`}
+                                                    >
+                                                        {item.name}
+                                                    </button>
+                                                ))
+                                            ) : (
+                                                <>
+                                                    <button
+                                                        onClick={() => handleNavigate('/company/dashboard')}
+                                                        className={`text-left px-4 py-3 rounded-xl transition-all duration-300 font-medium ${
+                                                            isActive('/company/dashboard') 
+                                                                ? 'bg-gradient-to-r from-primary/10 to-secondary/10 text-primary font-semibold shadow-sm border border-primary/20' 
+                                                                : 'text-gray-600 hover:text-primary hover:bg-primary/5 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-2'
+                                                        }`}
+                                                    >
+                                                        {t('dashboard')}
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleNavigate('/company/post-job')}
+                                                        className={`text-left px-4 py-3 rounded-xl transition-all duration-300 font-medium ${
+                                                            isActive('/company/post-job') 
+                                                                ? 'bg-gradient-to-r from-primary/10 to-secondary/10 text-primary font-semibold shadow-sm border border-primary/20' 
+                                                                : 'text-gray-600 hover:text-primary hover:bg-primary/5 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-2'
+                                                        }`}
+                                                    >
+                                                        {t('postJob')}
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleNavigate('/company/inbox')}
+                                                        className={`text-left px-4 py-3 rounded-xl transition-all duration-300 font-medium ${
+                                                            isActive('/company/inbox') 
+                                                                ? 'bg-gradient-to-r from-primary/10 to-secondary/10 text-primary font-semibold shadow-sm border border-primary/20' 
+                                                                : 'text-gray-600 hover:text-primary hover:bg-primary/5 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-2'
+                                                        }`}
+                                                    >
+                                                        Applications
+                                                    </button>
+                                                </>
+                                            )
+                                        ) : (
+                                            <button
+                                                onClick={() => handleNavigate('/jobs')}
+                                                className="text-left px-4 py-3 rounded-xl transition-all duration-300 font-medium text-gray-600 hover:text-primary hover:bg-primary/5 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-2"
+                                            >
+                                                {t('searchJobs')}
+                                            </button>
+                                        )}
+                                    </div>
                                 </div>
-                            </div>
-                        )}
+                            )}
                     </div>
                 </div>
             </div>

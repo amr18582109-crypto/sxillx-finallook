@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import Toast from '../shared/Toast';
 import ApplyModal from './ApplyModal';
 
-const JobCard = ({ job, onApply, onCancel }) => {
+const JobCard = ({ job, onApply, onCancel, appliedJobIds }) => {
   const { user, isAuthenticated, updateUser } = useUser();
   const [applied, setApplied] = useState(false);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
@@ -14,11 +14,12 @@ const JobCard = ({ job, onApply, onCancel }) => {
   const [showApplyModal, setShowApplyModal] = useState(false);
   const [applicantsCount, setApplicantsCount] = useState(job.applicants || 0);
 
-  // Check applied status on mount and when user changes
+  // Check applied status on mount and when dependencies change
   useEffect(() => {
     const checkAppliedStatus = () => {
       const appliedJobs = getFromStorage('appliedJobs', []);
-      setApplied(appliedJobs.includes(job.id));
+      const isApplied = appliedJobs.includes(job.id) || (appliedJobIds && appliedJobIds.has(job.id));
+      setApplied(isApplied);
     };
     
     checkAppliedStatus();
@@ -27,7 +28,7 @@ const JobCard = ({ job, onApply, onCancel }) => {
     if (user?.appliedJobs) {
       setApplied(user.appliedJobs.includes(job.id));
     }
-  }, [job.id, user?.appliedJobs]);
+  }, [job.id, user?.appliedJobs, appliedJobIds]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);

@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 import Hero from '../components/landing/Hero';
 import Features from '../components/landing/Features';
+import CTA from '../components/landing/CTA';
 import Footer from '../components/landing/Footer';
 import LoginModal from '../components/auth/LoginModal';
 
@@ -35,6 +36,7 @@ const LandingPage = () => {
     <div>
       <Hero />
       <Features />
+      <CTA />
       <Footer />
       {showLogin && (
         <LoginModal 

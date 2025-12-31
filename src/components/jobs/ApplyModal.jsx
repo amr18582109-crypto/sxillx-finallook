@@ -44,16 +44,18 @@ const ApplyModal = ({ job, onClose, onSuccess }) => {
     
     // Save application
     const applications = getFromStorage('jobApplications', []);
-    applications.push({
+    const applicationData = {
       id: `app_${Date.now()}`,
       jobId: job.id,
       jobTitle: job.title,
       company: job.company,
-      userId: user?.id,
+      userId: user?.id || `guest_${Date.now()}`, // Use guest ID if no user
       ...formData,
       experience: parseInt(formData.experience) || 0,
       appliedDate: new Date().toISOString(),
-    });
+      isGuest: !isAuthenticated, // Mark as guest application
+    };
+    applications.push(applicationData);
     saveToStorage('jobApplications', applications);
 
     // Add to applied jobs - MUST be saved first
@@ -63,8 +65,8 @@ const ApplyModal = ({ job, onClose, onSuccess }) => {
       saveToStorage('appliedJobs', appliedJobs);
     }
 
-    // Update user's applied jobs - MUST happen synchronously
-    if (user) {
+    // Update user's applied jobs only if authenticated
+    if (isAuthenticated && user) {
       const userApplied = user.appliedJobs || [];
       if (!userApplied.includes(job.id)) {
         const updatedAppliedJobs = [...userApplied, job.id];

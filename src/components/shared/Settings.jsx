@@ -85,27 +85,29 @@ const Settings = () => {
 
   const ToggleSwitch = ({ enabled, onChange, label }) => (
     <div className="flex items-center justify-between py-3">
-      <span className="text-gray-700">{label}</span>
+      <span style={{ color: 'var(--text-primary)' }}>{label}</span>
       <button
         onClick={() => onChange(!enabled)}
-        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-          enabled ? 'bg-primary' : 'bg-gray-300'
-        }`}
+        className="relative inline-flex h-6 w-11 items-center rounded-full transition-colors"
+        style={{
+          background: enabled ? 'var(--color-primary-500)' : 'var(--color-gray-300)'
+        }}
       >
         <span
-          className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-            enabled ? 'translate-x-6' : 'translate-x-1'
-          }`}
+          className="inline-block h-4 w-4 transform rounded-full bg-white transition-transform"
+          style={{
+            transform: enabled ? 'translateX(24px)' : 'translateX(4px)'
+          }}
         />
       </button>
     </div>
   );
 
   const Section = ({ title, icon: Icon, children }) => (
-    <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
+    <div className="rounded-xl shadow-lg p-6 mb-6" style={{ background: 'var(--bg-primary)' }}>
       <div className="flex items-center space-x-3 mb-6">
-        <Icon className="w-6 h-6 text-primary" />
-        <h2 className="text-xl font-bold text-gray-800">{title}</h2>
+        <Icon className="w-6 h-6" style={{ color: 'var(--color-primary-500)' }} />
+        <h2 className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>{title}</h2>
       </div>
       {children}
     </div>
@@ -113,10 +115,10 @@ const Settings = () => {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 py-12 px-4">
+      <div className="min-h-screen py-12 px-4" style={{ background: 'var(--bg-secondary)' }}>
         <div className="max-w-3xl mx-auto">
-          <div className="bg-white rounded-xl shadow-lg p-8 text-center">
-            <p className="text-gray-600">{t('loading')}</p>
+          <div className="rounded-xl shadow-lg p-8 text-center" style={{ background: 'var(--bg-primary)' }}>
+            <p style={{ color: 'var(--text-secondary)' }}>{t('loading')}</p>
             <Button onClick={() => navigate('/?login=true')} variant="primary" className="mt-4">
               {t('login')}
             </Button>
@@ -127,10 +129,10 @@ const Settings = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 py-12 px-4">
+    <div className="min-h-screen py-12 px-4" style={{ background: 'var(--bg-secondary)' }}>
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center space-x-3 mb-8">
-          <SettingsIcon className="w-8 h-8 text-primary" />
+          <SettingsIcon className="w-8 h-8" style={{ color: 'var(--color-primary-500)' }} />
           <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             {t('settingsTitle')}
           </h1>
@@ -140,19 +142,23 @@ const Settings = () => {
         <Section title={t('theme')} icon={Globe}>
           <div className="space-y-4">
             <div className="flex items-center justify-between py-3">
-              <span className="text-gray-700">Language</span>
-              <div className="px-4 py-2 rounded-lg text-gray-700">English</div>
+              <span style={{ color: 'var(--text-primary)' }}>Language</span>
+              <div className="px-4 py-2 rounded-lg" style={{ color: 'var(--text-primary)', background: 'var(--bg-tertiary)' }}>English</div>
             </div>
             <div className="flex items-center justify-between py-3">
-              <span className="text-gray-700">{t('theme')}</span>
+              <span style={{ color: 'var(--text-primary)' }}>{t('theme')}</span>
               <div className="flex items-center space-x-2">
                 <button
                   onClick={() => updateSetting('theme', 'light')}
                   className={`px-4 py-2 rounded-lg transition flex items-center space-x-2 ${
                     settings.theme === 'light'
-                      ? 'bg-primary text-white'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                      ? ''
+                      : ''
                   }`}
+                  style={{
+                    background: settings.theme === 'light' ? 'var(--gradient-primary)' : 'var(--bg-tertiary)',
+                    color: settings.theme === 'light' ? 'var(--text-inverse)' : 'var(--text-primary)'
+                  }}
                 >
                   <Sun className="w-4 h-4" />
                   <span>{t('lightMode')}</span>
@@ -161,9 +167,13 @@ const Settings = () => {
                   onClick={() => updateSetting('theme', 'dark')}
                   className={`px-4 py-2 rounded-lg transition flex items-center space-x-2 ${
                     settings.theme === 'dark'
-                      ? 'bg-primary text-white'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                      ? ''
+                      : ''
                   }`}
+                  style={{
+                    background: settings.theme === 'dark' ? 'var(--gradient-primary)' : 'var(--bg-tertiary)',
+                    color: settings.theme === 'dark' ? 'var(--text-inverse)' : 'var(--text-primary)'
+                  }}
                 >
                   <Moon className="w-4 h-4" />
                   <span>{t('darkMode')}</span>
@@ -226,22 +236,22 @@ const Settings = () => {
         <Section title={t('account')} icon={User}>
           <div className="space-y-3">
             <div className="flex items-center justify-between py-2">
-              <span className="text-gray-600">{t('accountType')}</span>
-              <span className="font-semibold text-gray-800 capitalize">{user?.type || 'N/A'}</span>
+              <span style={{ color: 'var(--text-secondary)' }}>{t('accountType')}</span>
+              <span className="font-semibold capitalize" style={{ color: 'var(--text-primary)' }}>{user?.type || 'N/A'}</span>
             </div>
             <div className="flex items-center justify-between py-2">
-              <span className="text-gray-600">Email</span>
-              <span className="font-semibold text-gray-800">{user?.email || 'N/A'}</span>
+              <span style={{ color: 'var(--text-secondary)' }}>Email</span>
+              <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>{user?.email || 'N/A'}</span>
             </div>
             <div className="flex items-center justify-between py-2">
-              <span className="text-gray-600">{t('memberSince')}</span>
-              <span className="font-semibold text-gray-800">
+              <span style={{ color: 'var(--text-secondary)' }}>{t('memberSince')}</span>
+              <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>
                 {user?.createdAt
                   ? new Date(user.createdAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
                   : 'Dec 2024'}
               </span>
             </div>
-            <div className="pt-3 border-t border-gray-200">
+            <div className="pt-3" style={{ borderTop: `1px solid var(--border-light)` }}>
               <Button variant="outline" className="w-full">
                 {t('changePassword')} ({t('comingSoon')})
               </Button>
@@ -253,11 +263,16 @@ const Settings = () => {
         <Section title="Preferences" icon={SettingsIcon}>
           <div className="space-y-4">
             <div className="flex items-center justify-between py-3">
-              <span className="text-gray-700">{t('jobsPerPage')}</span>
+              <span style={{ color: 'var(--text-primary)' }}>{t('jobsPerPage')}</span>
               <select
                 value={settings.jobsPerPage}
                 onChange={(e) => updateSetting('jobsPerPage', parseInt(e.target.value))}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="px-4 py-2 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                style={{
+                  background: 'var(--bg-primary)',
+                  color: 'var(--text-primary)',
+                  border: `2px solid var(--border-light)`
+                }}
               >
                 <option value={10}>10</option>
                 <option value={25}>25</option>
@@ -265,25 +280,25 @@ const Settings = () => {
               </select>
             </div>
             <div className="flex items-center justify-between py-3">
-              <span className="text-gray-700">{t('defaultView')}</span>
+              <span style={{ color: 'var(--text-primary)' }}>{t('defaultView')}</span>
               <div className="flex items-center space-x-2">
                 <button
                   onClick={() => updateSetting('defaultView', 'grid')}
-                  className={`px-4 py-2 rounded-lg transition ${
-                    settings.defaultView === 'grid'
-                      ? 'bg-primary text-white'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                  }`}
+                  className="px-4 py-2 rounded-lg transition"
+                  style={{
+                    background: settings.defaultView === 'grid' ? 'var(--gradient-primary)' : 'var(--bg-tertiary)',
+                    color: settings.defaultView === 'grid' ? 'var(--text-inverse)' : 'var(--text-primary)'
+                  }}
                 >
                   {t('grid')}
                 </button>
                 <button
                   onClick={() => updateSetting('defaultView', 'list')}
-                  className={`px-4 py-2 rounded-lg transition ${
-                    settings.defaultView === 'list'
-                      ? 'bg-primary text-white'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                  }`}
+                  className="px-4 py-2 rounded-lg transition"
+                  style={{
+                    background: settings.defaultView === 'list' ? 'var(--gradient-primary)' : 'var(--bg-tertiary)',
+                    color: settings.defaultView === 'list' ? 'var(--text-inverse)' : 'var(--text-primary)'
+                  }}
                 >
                   {t('list')}
                 </button>
@@ -304,7 +319,7 @@ const Settings = () => {
             <Button variant="outline" className="w-full justify-start">
               {t('reportBug')}
             </Button>
-            <div className="pt-3 border-t border-gray-200 text-sm text-gray-500">
+            <div className="pt-3 text-sm" style={{ borderTop: `1px solid var(--border-light)`, color: 'var(--text-tertiary)' }}>
               SkillX v1.0.0
             </div>
           </div>
@@ -316,7 +331,8 @@ const Settings = () => {
             <Button
               onClick={() => setShowLogoutConfirm(true)}
               variant="primary"
-              className="w-full bg-red-500 hover:bg-red-600 flex items-center justify-center space-x-2"
+              className="w-full flex items-center justify-center space-x-2"
+              style={{ background: 'var(--gradient-danger)' }}
             >
               <LogOut className="w-5 h-5" />
               <span>{t('logout')}</span>
@@ -326,18 +342,28 @@ const Settings = () => {
 
         {/* Danger Zone */}
         {isAuthenticated && (
-          <div className="bg-white rounded-xl shadow-lg p-6 border-2 border-red-200">
+          <div className="rounded-xl shadow-lg p-6" style={{ background: 'var(--bg-primary)', border: `2px solid var(--color-danger-200)` }}>
             <div className="flex items-center space-x-3 mb-6">
-              <AlertTriangle className="w-6 h-6 text-red-500" />
-              <h2 className="text-xl font-bold text-red-600">{t('dangerZone')}</h2>
+              <AlertTriangle className="w-6 h-6" style={{ color: 'var(--color-danger-500)' }} />
+              <h2 className="text-xl font-bold" style={{ color: 'var(--color-danger-600)' }}>{t('dangerZone')}</h2>
             </div>
-            <p className="text-gray-600 mb-4">
+            <p className="mb-4" style={{ color: 'var(--text-secondary)' }}>
               Once you delete your account, there is no going back. Please be certain.
             </p>
             <Button
               onClick={() => setShowDeleteConfirm(true)}
               variant="outline"
-              className="w-full border-red-500 text-red-500 hover:bg-red-50 flex items-center justify-center space-x-2"
+              className="w-full flex items-center justify-center space-x-2"
+              style={{
+                borderColor: 'var(--color-danger-500)',
+                color: 'var(--color-danger-500)'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.background = 'var(--color-danger-50)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.background = 'transparent';
+              }}
             >
               <Trash2 className="w-5 h-5" />
               <span>{t('deleteAccount')}</span>
@@ -347,15 +373,16 @@ const Settings = () => {
 
         {/* Logout Confirmation */}
         {showLogoutConfirm && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6">
-              <h3 className="text-xl font-bold text-gray-800 mb-4">{t('confirmLogout')}</h3>
-              <p className="text-gray-600 mb-6">{t('areYouSureLogout')}</p>
+          <div className="fixed inset-0 flex items-center justify-center z-50 p-4" style={{ background: 'var(--bg-overlay)' }}>
+            <div className="rounded-xl shadow-2xl max-w-md w-full p-6" style={{ background: 'var(--bg-primary)' }}>
+              <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>{t('confirmLogout')}</h3>
+              <p className="mb-6" style={{ color: 'var(--text-secondary)' }}>{t('areYouSureLogout')}</p>
               <div className="flex space-x-3">
                 <Button
                   onClick={handleLogout}
                   variant="primary"
-                  className="flex-1 bg-red-500 hover:bg-red-600"
+                  className="flex-1"
+                  style={{ background: 'var(--gradient-danger)' }}
                 >
                   {t('yesLogout')}
                 </Button>
@@ -373,17 +400,18 @@ const Settings = () => {
 
         {/* Delete Account Confirmation */}
         {showDeleteConfirm && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6">
-              <h3 className="text-xl font-bold text-red-600 mb-4">{t('deleteAccountConfirm')}</h3>
-              <p className="text-gray-600 mb-6">
+          <div className="fixed inset-0 flex items-center justify-center z-50 p-4" style={{ background: 'var(--bg-overlay)' }}>
+            <div className="rounded-xl shadow-2xl max-w-md w-full p-6" style={{ background: 'var(--bg-primary)' }}>
+              <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--color-danger-600)' }}>{t('deleteAccountConfirm')}</h3>
+              <p className="mb-6" style={{ color: 'var(--text-secondary)' }}>
                 {t('deleteAccountWarning')}
               </p>
               <div className="flex space-x-3">
                 <Button
                   onClick={handleDeleteAccount}
                   variant="primary"
-                  className="flex-1 bg-red-500 hover:bg-red-600"
+                  className="flex-1"
+                  style={{ background: 'var(--gradient-danger)' }}
                 >
                   {t('yesDeleteAccount')}
                 </Button>
